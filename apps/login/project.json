@@ -1,0 +1,70 @@
+{
+  "name": "login",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/login/src",
+  "tags": ["type:app", "scope:remote"],
+  "targets": {
+    "build": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {
+        "target": "login:esbuild:production"
+      },
+      "configurations": {
+        "production": { "target": "login:esbuild:production" },
+        "development": { "target": "login:esbuild:development" }
+      },
+      "defaultConfiguration": "production"
+    },
+    "esbuild": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/login",
+        "browser": "apps/login/src/main.ts",
+        "tsConfig": "apps/login/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [{ "glob": "**/*", "input": "apps/login/public" }],
+        "styles": [
+          "libs/shared/styles/src/lib/scss/styles.scss",
+          "apps/login/src/styles.scss"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            { "type": "initial", "maximumWarning": "500kb", "maximumError": "2mb" },
+            { "type": "anyComponentStyle", "maximumWarning": "4kb", "maximumError": "8kb" }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {
+        "target": "login:serve-original:development",
+        "rebuildDelay": 0,
+        "dev": true,
+        "port": 4201
+      }
+    },
+    "serve-original": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "options": { "port": 4201 },
+      "configurations": {
+        "production": { "buildTarget": "login:esbuild:production" },
+        "development": { "buildTarget": "login:esbuild:development" }
+      },
+      "defaultConfiguration": "development"
+    }
+  }
+}

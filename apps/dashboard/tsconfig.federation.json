@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "types": []
+  },
+  "files": [
+    "src/main.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts",
+    "..\\..\\node_modules\\@angular\\platform-server\\fesm2022\\platform-server.mjs",
+    "..\\..\\node_modules\\@angular\\platform-server\\fesm2022\\init.mjs",
+    "..\\..\\node_modules\\@angular\\ssr\\fesm2022\\node.mjs"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts"
+  ]
+}

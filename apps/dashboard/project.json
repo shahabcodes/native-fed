@@ -1,0 +1,56 @@
+{
+  "name": "dashboard",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/dashboard/src",
+  "tags": ["type:app", "scope:remote"],
+  "targets": {
+    "build": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": { "target": "dashboard:esbuild:production" },
+      "configurations": {
+        "production": { "target": "dashboard:esbuild:production" },
+        "development": { "target": "dashboard:esbuild:development" }
+      },
+      "defaultConfiguration": "production"
+    },
+    "esbuild": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/dashboard",
+        "browser": "apps/dashboard/src/main.ts",
+        "tsConfig": "apps/dashboard/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [{ "glob": "**/*", "input": "apps/dashboard/public" }],
+        "styles": ["libs/shared/styles/src/lib/scss/styles.scss", "apps/dashboard/src/styles.scss"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            { "type": "initial", "maximumWarning": "500kb", "maximumError": "2mb" },
+            { "type": "anyComponentStyle", "maximumWarning": "4kb", "maximumError": "8kb" }
+          ],
+          "outputHashing": "all"
+        },
+        "development": { "optimization": false, "extractLicenses": false, "sourceMap": true }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": { "target": "dashboard:serve-original:development", "rebuildDelay": 0, "dev": true, "port": 4202 }
+    },
+    "serve-original": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "options": { "port": 4202 },
+      "configurations": {
+        "production": { "buildTarget": "dashboard:esbuild:production" },
+        "development": { "buildTarget": "dashboard:esbuild:development" }
+      },
+      "defaultConfiguration": "development"
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "login": "http://localhost:4201/remoteEntry.json",
+  "dashboard": "http://localhost:4202/remoteEntry.json",
+  "inspection": "http://localhost:4203/remoteEntry.json"
+}

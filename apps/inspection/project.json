@@ -1,0 +1,56 @@
+{
+  "name": "inspection",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/inspection/src",
+  "tags": ["type:app", "scope:remote"],
+  "targets": {
+    "build": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": { "target": "inspection:esbuild:production" },
+      "configurations": {
+        "production": { "target": "inspection:esbuild:production" },
+        "development": { "target": "inspection:esbuild:development" }
+      },
+      "defaultConfiguration": "production"
+    },
+    "esbuild": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/inspection",
+        "browser": "apps/inspection/src/main.ts",
+        "tsConfig": "apps/inspection/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [{ "glob": "**/*", "input": "apps/inspection/public" }],
+        "styles": ["libs/shared/styles/src/lib/scss/styles.scss", "apps/inspection/src/styles.scss"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            { "type": "initial", "maximumWarning": "500kb", "maximumError": "2mb" },
+            { "type": "anyComponentStyle", "maximumWarning": "4kb", "maximumError": "8kb" }
+          ],
+          "outputHashing": "all"
+        },
+        "development": { "optimization": false, "extractLicenses": false, "sourceMap": true }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": { "target": "inspection:serve-original:development", "rebuildDelay": 0, "dev": true, "port": 4203 }
+    },
+    "serve-original": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "options": { "port": 4203 },
+      "configurations": {
+        "production": { "buildTarget": "inspection:esbuild:production" },
+        "development": { "buildTarget": "inspection:esbuild:development" }
+      },
+      "defaultConfiguration": "development"
+    }
+  }
+}

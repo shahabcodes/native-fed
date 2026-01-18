@@ -1,0 +1,166 @@
+import { Injectable, signal, computed, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
+import { User, LoginCredentials, LoginResponse, AuthState } from '../models/user.model';
+
+const TOKEN_KEY = 'mfe_auth_token';
+const USER_KEY = 'mfe_auth_user';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
+
+  private _state = signal<AuthState>({
+    user: null,
+    token: null,
+    isAuthenticated: false,
+    isLoading: false,
+    error: null
+  });
+
+  readonly state = this._state.asReadonly();
+  readonly user = computed(() => this._state().user);
+  readonly isAuthenticated = computed(() => this._state().isAuthenticated);
+  readonly isLoading = computed(() => this._state().isLoading);
+  readonly error = computed(() => this._state().error);
+
+  constructor() {
+    this.initializeAuth();
+  }
+
+  private initializeAuth(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem(TOKEN_KEY);
+      const userStr = localStorage.getItem(USER_KEY);
+
+      if (token && userStr) {
+        try {
+          const user = JSON.parse(userStr) as User;
+          this._state.set({
+            user,
+            token,
+            isAuthenticated: true,
+            isLoading: false,
+            error: null
+          });
+        } catch {
+          this.clearStorage();
+        }
+      }
+    }
+  }
+
+  async login(credentials: LoginCredentials): Promise<boolean> {
+    this._state.update(state => ({ ...state, isLoading: true, error: null }));
+
+    try {
+      const response = await this.mockLoginApi(credentials);
+
+      if (response) {
+        this.setAuthData(response);
+        return true;
+      }
+
+      this._state.update(state => ({
+        ...state,
+        isLoading: false,
+        error: 'Invalid credentials'
+      }));
+      return false;
+    } catch (error) {
+      this._state.update(state => ({
+        ...state,
+        isLoading: false,
+        error: 'Login failed. Please try again.'
+      }));
+      return false;
+    }
+  }
+
+  logout(): void {
+    this.clearStorage();
+    this._state.set({
+      user: null,
+      token: null,
+      isAuthenticated: false,
+      isLoading: false,
+      error: null
+    });
+    this.router.navigate(['/login']);
+  }
+
+  private setAuthData(response: LoginResponse): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem(TOKEN_KEY, response.token);
+      localStorage.setItem(USER_KEY, JSON.stringify(response.user));
+    }
+
+    this._state.set({
+      user: response.user,
+      token: response.token,
+      isAuthenticated: true,
+      isLoading: false,
+      error: null
+    });
+  }
+
+  private clearStorage(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem(TOKEN_KEY);
+      localStorage.removeItem(USER_KEY);
+    }
+  }
+
+  getToken(): string | null {
+    return this._state().token;
+  }
+
+  getUserFullName(): string {
+    const user = this._state().user;
+    if (!user) return '';
+    return `${user.firstName} ${user.lastName}`;
+  }
+
+  private mockLoginApi(credentials: LoginCredentials): Promise<LoginResponse | null> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (credentials.email === 'admin@example.com' && credentials.password === 'password') {
+          resolve({
+            user: {
+              id: '1',
+              email: credentials.email,
+              firstName: 'Admin',
+              lastName: 'User',
+              role: 'admin',
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString()
+            },
+            token: 'mock-jwt-token-' + Date.now(),
+            refreshToken: 'mock-refresh-token-' + Date.now(),
+            expiresIn: 3600
+          });
+        } else if (credentials.email === 'inspector@example.com' && credentials.password === 'password') {
+          resolve({
+            user: {
+              id: '2',
+              email: credentials.email,
+              firstName: 'John',
+              lastName: 'Inspector',
+              role: 'inspector',
+              createdAt: new Date().toISOString(),
+              updatedAt: new Date().toISOString()
+            },
+            token: 'mock-jwt-token-' + Date.now(),
+            refreshToken: 'mock-refresh-token-' + Date.now(),
+            expiresIn: 3600
+          });
+        } else {
+          resolve(null);
+        }
+      }, 800);
+    });
+  }
+}

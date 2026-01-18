@@ -1,0 +1,103 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+@use 'components';
+@use 'utilities';
+
+// Reset & Base Styles
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $gray-900;
+  background-color: $gray-100;
+
+  [dir='rtl'] & {
+    font-family: $font-family-arabic;
+  }
+}
+
+// Typography
+h1, h2, h3, h4, h5, h6 {
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+  margin-bottom: $spacer-sm;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+h5 { font-size: 1.125rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin-bottom: $spacer-md;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $primary-dark;
+  }
+}
+
+// Lists
+ul, ol {
+  padding-inline-start: $spacer-lg;
+  margin-bottom: $spacer-md;
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Focus Styles
+:focus-visible {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}
+
+// Selection
+::selection {
+  background-color: rgba($primary-color, 0.2);
+  color: $gray-900;
+}
+
+// Scrollbar Styling
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $gray-400;
+  border-radius: 4px;
+
+  &:hover {
+    background: $gray-500;
+  }
+}
