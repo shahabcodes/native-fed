@@ -1,13 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, inject, effect } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { I18nService } from '@mfe-workspace/shared-i18n';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   selector: 'app-root',
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
+  template: `
+    <div class="app-container" [attr.dir]="direction()">
+      <router-outlet></router-outlet>
+    </div>
+  `,
+  styles: [`
+    .app-container {
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+  `]
 })
 export class App {
-  protected title = 'shell';
+  private i18nService = inject(I18nService);
+
+  direction = this.i18nService.direction;
+
+  constructor() {
+    // Initialize direction on app start
+    effect(() => {
+      document.documentElement.dir = this.direction();
+      document.body.dir = this.direction();
+    });
+  }
 }

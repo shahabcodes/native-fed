@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@mfe-workspace/shared-ui": ["libs/shared/ui/src/index.ts"],
+      "@mfe-workspace/shared-styles": ["libs/shared/styles/src/index.ts"],
+      "@mfe-workspace/shared-services": ["libs/shared/services/src/index.ts"],
+      "@mfe-workspace/shared-i18n": ["libs/shared/i18n/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

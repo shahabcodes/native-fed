@@ -4,9 +4,25 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/shell/src",
-  "tags": [],
+  "tags": ["type:app", "scope:shell"],
   "targets": {
     "build": {
+      "executor": "@angular-architects/native-federation:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "shell:esbuild:production"
+      },
+      "configurations": {
+        "production": {
+          "target": "shell:esbuild:production"
+        },
+        "development": {
+          "target": "shell:esbuild:development"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "esbuild": {
       "executor": "@angular/build:application",
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -18,14 +34,18 @@
           {
             "glob": "**/*",
             "input": "apps/shell/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/shell/src/assets",
+            "output": "/assets"
           }
         ],
-        "styles": ["apps/shell/src/styles.scss"],
-        "server": "apps/shell/src/main.server.ts",
-        "ssr": {
-          "entry": "apps/shell/src/server.ts"
-        },
-        "outputMode": "server"
+        "styles": [
+          "libs/shared/styles/src/lib/scss/styles.scss",
+          "apps/shell/src/styles.scss"
+        ],
+        "scripts": []
       },
       "configurations": {
         "production": {
@@ -33,7 +53,7 @@
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumError": "2mb"
             },
             {
               "type": "anyComponentStyle",
@@ -52,14 +72,23 @@
       "defaultConfiguration": "production"
     },
     "serve": {
+      "executor": "@angular-architects/native-federation:build",
+      "options": {
+        "target": "shell:serve-original:development",
+        "rebuildDelay": 0,
+        "dev": true,
+        "port": 4200
+      }
+    },
+    "serve-original": {
       "continuous": true,
       "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "shell:build:production"
+          "buildTarget": "shell:esbuild:production"
         },
         "development": {
-          "buildTarget": "shell:build:development"
+          "buildTarget": "shell:esbuild:development"
         }
       },
       "defaultConfiguration": "development"
@@ -70,16 +99,6 @@
     "test": {
       "executor": "@angular/build:unit-test",
       "options": {}
-    },
-    "serve-static": {
-      "continuous": true,
-      "executor": "@nx/web:file-server",
-      "options": {
-        "buildTarget": "shell:build",
-        "port": 4200,
-        "staticFilePath": "dist/apps/shell/browser",
-        "spa": true
-      }
     }
   }
 }
