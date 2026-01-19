@@ -6,6 +6,26 @@
       "node"
     ]
   },
+  "files": [
+    "../../libs/shared/i18n/src/index.ts",
+    "../../libs/shared/i18n/src/lib/directives/rtl.directive.ts",
+    "../../libs/shared/i18n/src/lib/pipes/translate.pipe.ts",
+    "../../libs/shared/i18n/src/lib/services/i18n.service.ts",
+    "../../libs/shared/i18n/src/lib/translations/ar.ts",
+    "../../libs/shared/i18n/src/lib/translations/en.ts",
+    "../../libs/shared/services/src/index.ts",
+    "../../libs/shared/services/src/lib/auth/auth.guard.ts",
+    "../../libs/shared/services/src/lib/auth/auth.service.ts",
+    "../../libs/shared/services/src/lib/models/user.model.ts",
+    "../../libs/shared/services/src/lib/models/inspection.model.ts",
+    "../../libs/shared/styles/src/index.ts",
+    "../../libs/shared/ui/src/index.ts",
+    "../../libs/shared/ui/src/lib/components/button.component.ts",
+    "../../libs/shared/ui/src/lib/components/card.component.ts",
+    "../../libs/shared/ui/src/lib/components/header.component.ts",
+    "../../libs/shared/ui/src/lib/components/loading.component.ts",
+    "../../libs/shared/ui/src/lib/components/sidebar.component.ts"
+  ],
   "include": [
     "src/**/*.ts",
     "..\\..\\node_modules\\@angular\\platform-server\\fesm2022\\platform-server.mjs",

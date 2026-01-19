@@ -10,21 +10,25 @@ import { I18nService } from '@mfe-workspace/shared-i18n';
   standalone: true,
   imports: [CommonModule, RouterModule, HeaderComponent, SidebarComponent],
   template: `
-    <div class="layout">
+    <div class="layout" [class.rtl]="isRtl()">
       <lib-header
         [appName]="'MFE Workspace'"
         [username]="userName()"
+        [currentLang]="currentLang()"
+        [isRtl]="isRtl()"
         (menuToggle)="toggleSidebar()"
         (logout)="onLogout()"
+        (languageToggle)="onLanguageToggle()"
       ></lib-header>
 
       <lib-sidebar
         [menuItems]="menuItems"
         [collapsed]="sidebarCollapsed()"
         [currentLang]="currentLang()"
+        [isRtl]="isRtl()"
       ></lib-sidebar>
 
-      <main class="main-content" [class.sidebar-collapsed]="sidebarCollapsed()">
+      <main class="main-content" [class.sidebar-collapsed]="sidebarCollapsed()" [class.rtl]="isRtl()">
         <div class="content-wrapper">
           <router-outlet></router-outlet>
         </div>
@@ -33,17 +37,24 @@ import { I18nService } from '@mfe-workspace/shared-i18n';
   `,
   styles: [`
     .layout { min-height: 100vh; }
+    .layout.rtl { direction: rtl; }
     .main-content {
-      margin-inline-start: 260px;
+      margin-left: 260px;
+      margin-right: 0;
       margin-top: 64px;
       min-height: calc(100vh - 64px);
       padding: 1.5rem;
-      transition: margin-inline-start 300ms ease-in-out;
+      transition: margin 300ms ease-in-out;
       background-color: #f5f5f5;
     }
-    .main-content.sidebar-collapsed { margin-inline-start: 64px; }
+    .main-content.rtl {
+      margin-left: 0;
+      margin-right: 260px;
+    }
+    .main-content.sidebar-collapsed { margin-left: 64px; margin-right: 0; }
+    .main-content.sidebar-collapsed.rtl { margin-left: 0; margin-right: 64px; }
     .content-wrapper { max-width: 1400px; margin: 0 auto; }
-    @media (max-width: 768px) { .main-content { margin-inline-start: 0; } }
+    @media (max-width: 768px) { .main-content, .main-content.rtl { margin-left: 0; margin-right: 0; } }
   `]
 })
 export class LayoutComponent {
@@ -52,6 +63,7 @@ export class LayoutComponent {
 
   sidebarCollapsed = signal(false);
   currentLang = this.i18nService.currentLang;
+  isRtl = this.i18nService.isRtl;
 
   menuItems: MenuItem[] = [
     {
@@ -77,5 +89,9 @@ export class LayoutComponent {
 
   onLogout(): void {
     this.authService.logout();
+  }
+
+  onLanguageToggle(): void {
+    this.i18nService.toggleLanguage();
   }
 }

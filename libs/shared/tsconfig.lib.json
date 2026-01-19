@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "declaration": true,
+    "declarationMap": true
+  },
+  "include": [
+    "ui/src/**/*.ts",
+    "styles/src/**/*.ts",
+    "services/src/**/*.ts",
+    "i18n/src/**/*.ts"
+  ],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts"]
+}

@@ -15,7 +15,7 @@ export interface MenuItem {
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <aside class="sidebar" [class.collapsed]="collapsed">
+    <aside class="sidebar" [class.collapsed]="collapsed" [class.rtl]="isRtl">
       <nav class="sidebar-nav">
         <a
           *ngFor="let item of menuItems"
@@ -46,7 +46,7 @@ export interface MenuItem {
       overflow-y: auto;
     }
 
-    [dir='rtl'] .sidebar {
+.sidebar.rtl {
       left: auto;
       right: 0;
     }
@@ -113,7 +113,7 @@ export interface MenuItem {
         transform: translateX(-100%);
       }
 
-      [dir='rtl'] .sidebar {
+      .sidebar.rtl {
         transform: translateX(100%);
       }
 
@@ -128,4 +128,5 @@ export class SidebarComponent {
   @Input() menuItems: MenuItem[] = [];
   @Input() collapsed = false;
   @Input() currentLang = 'en';
+  @Input() isRtl = false;
 }

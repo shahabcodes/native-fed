@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   template: `
-    <header class="header">
+    <header class="header" [class.rtl]="isRtl">
       <div class="header-start">
         <button class="menu-btn" (click)="menuToggle.emit()">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -19,6 +19,14 @@ import { CommonModule } from '@angular/common';
       </div>
 
       <div class="header-end">
+        <button class="lang-btn" (click)="languageToggle.emit()" [title]="currentLang === 'en' ? 'Switch to Arabic' : 'Switch to English'">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span class="lang-label">{{ currentLang === 'en' ? 'العربية' : 'EN' }}</span>
+        </button>
         <div class="user-info" *ngIf="username">
           <div class="user-avatar">{{ userInitials }}</div>
           <span class="user-name">{{ username }}</span>
@@ -106,8 +114,45 @@ import { CommonModule } from '@angular/common';
       color: #374151;
     }
 
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #e5e7eb;
+      background: white;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #374151;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 150ms;
+    }
+
+    .lang-btn:hover {
+      background-color: #f3f4f6;
+      border-color: #d1d5db;
+    }
+
+    .lang-label {
+      font-family: inherit;
+    }
+
+    /* RTL Support */
+    .header.rtl {
+      direction: rtl;
+    }
+
+    .header.rtl .header-start,
+    .header.rtl .header-end {
+      flex-direction: row-reverse;
+    }
+
     @media (max-width: 768px) {
       .user-name {
+        display: none;
+      }
+      .lang-label {
         display: none;
       }
     }
@@ -116,9 +161,12 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent {
   @Input() appName = 'MFE App';
   @Input() username?: string;
+  @Input() currentLang: 'en' | 'ar' = 'en';
+  @Input() isRtl = false;
 
   @Output() menuToggle = new EventEmitter<void>();
   @Output() logout = new EventEmitter<void>();
+  @Output() languageToggle = new EventEmitter<void>();
 
   get userInitials(): string {
     if (!this.username) return '';
