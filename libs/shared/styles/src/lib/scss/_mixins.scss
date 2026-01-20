@@ -176,6 +176,27 @@
   }
 }
 
+// Responsive down (max-width media queries)
+@mixin respond-down($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (max-width: #{$breakpoint-sm - 1px}) { @content; }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: #{$breakpoint-md - 1px}) { @content; }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: #{$breakpoint-lg - 1px}) { @content; }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: #{$breakpoint-xl - 1px}) { @content; }
+  } @else if $breakpoint == 'xxl' {
+    @media (max-width: #{$breakpoint-xxl - 1px}) { @content; }
+  }
+}
+
+// Touch-friendly target sizing
+@mixin touch-target($min-size: 44px) {
+  min-width: $min-size;
+  min-height: $min-size;
+}
+
 // RTL Support
 @mixin rtl {
   [dir='rtl'] & {

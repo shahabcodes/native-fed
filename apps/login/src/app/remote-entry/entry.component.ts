@@ -115,13 +115,14 @@ import { I18nService, TranslatePipe } from '@mfe-workspace/shared-i18n';
     .form-control {
       width: 100%; padding: 0.75rem 1rem; border: 1px solid #d1d5db;
       border-radius: 8px; font-size: 1rem; transition: border-color 150ms, box-shadow 150ms;
+      min-height: 44px;
     }
     .form-control:focus {
       outline: none; border-color: #3f51b5; box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1);
     }
     .form-error { display: block; margin-top: 0.25rem; color: #dc3545; font-size: 0.875rem; }
     .form-check { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .form-check-input { width: 18px; height: 18px; accent-color: #3f51b5; cursor: pointer; }
+    .form-check-input { width: 20px; height: 20px; accent-color: #3f51b5; cursor: pointer; }
     .form-check-label { cursor: pointer; color: #4b5563; }
     .alert-error {
       padding: 0.75rem 1rem; background-color: #fee2e2; border: 1px solid #fecaca;
@@ -137,9 +138,22 @@ import { I18nService, TranslatePipe } from '@mfe-workspace/shared-i18n';
     .lang-btn {
       background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
       color: white; padding: 0.5rem 1rem; border-radius: 8px; cursor: pointer;
-      transition: all 150ms;
+      transition: all 150ms; min-height: 44px;
     }
     .lang-btn:hover { background: rgba(255, 255, 255, 0.3); }
+
+    @media (max-width: 576px) {
+      .login-container { padding: 0.75rem; }
+      .login-header { margin-bottom: 1.5rem; }
+      .login-title { font-size: 1.5rem; }
+      .login-subtitle { font-size: 0.9375rem; }
+      .form-group { margin-bottom: 1rem; }
+      .demo-credentials { padding: 0.75rem; font-size: 0.8125rem; }
+    }
+
+    @media (max-width: 400px) {
+      .login-title { font-size: 1.375rem; }
+    }
   `]
 })
 export class RemoteEntryComponent {

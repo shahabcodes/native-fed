@@ -63,16 +63,32 @@ import { ActivityListComponent } from '../components/activity-list.component';
     .skeleton-card { height: 100px; background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%); background-size: 200% 100%; animation: skeleton 1.5s infinite; border-radius: 12px; }
     @keyframes skeleton { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     .content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
-    @media (max-width: 1024px) { .content-grid { grid-template-columns: 1fr; } }
     .view-all-link { color: #3f51b5; text-decoration: none; font-size: 0.875rem; font-weight: 500; }
     .view-all-link:hover { color: #002984; }
     .quick-actions { display: flex; flex-direction: column; gap: 1rem; }
-    .action-btn { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 10px; text-decoration: none; transition: all 150ms; }
+    .action-btn { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 10px; text-decoration: none; transition: all 150ms; min-height: 44px; }
     .action-primary { background-color: #3f51b5; color: white; }
     .action-primary:hover { background-color: #002984; }
     .action-secondary { background-color: #f3f4f6; color: #374151; }
     .action-secondary:hover { background-color: #e5e7eb; }
     .action-icon { display: flex; }
+
+    @media (max-width: 1024px) {
+      .content-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .page-header { margin-bottom: 1.5rem; }
+      .page-title { font-size: 1.5rem; }
+      .stats-grid { gap: 1rem; margin-bottom: 1.5rem; }
+      .content-grid { gap: 1rem; }
+    }
+
+    @media (max-width: 576px) {
+      .stats-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+      .page-title { font-size: 1.25rem; }
+      .page-subtitle { font-size: 0.875rem; }
+    }
   `]
 })
 export class RemoteEntryComponent implements OnInit {

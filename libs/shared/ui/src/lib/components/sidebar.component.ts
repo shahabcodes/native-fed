@@ -231,15 +231,27 @@ export interface MenuItem {
     @media (max-width: 768px) {
       .sidebar {
         transform: translateX(-100%);
+        width: 280px;
       }
 
       .sidebar.rtl {
         transform: translateX(100%);
       }
 
-      .sidebar.collapsed {
+      .sidebar:not(.collapsed) {
         transform: translateX(0);
-        width: 260px;
+      }
+
+      .sidebar.rtl:not(.collapsed) {
+        transform: translateX(0);
+      }
+
+      .sidebar.collapsed {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.collapsed.rtl {
+        transform: translateX(100%);
       }
     }
   `]

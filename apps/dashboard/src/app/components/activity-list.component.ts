@@ -27,14 +27,24 @@ import { RecentActivity } from '../services/dashboard-api.service';
     .activity-icon {
       width: 36px; height: 36px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
     }
     .icon-completed { background: #dcfce7; color: #16a34a; }
     .icon-created { background: #dbeafe; color: #2563eb; }
     .icon-updated { background: #fef3c7; color: #d97706; }
-    .activity-content { flex: 1; }
+    .activity-content { flex: 1; min-width: 0; }
     .activity-title { font-weight: 500; color: #1f2937; }
-    .activity-desc { font-size: 0.875rem; color: #6b7280; }
-    .activity-meta { font-size: 0.75rem; color: #9ca3af; }
+    .activity-desc { font-size: 0.875rem; color: #6b7280; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .activity-meta { font-size: 0.75rem; color: #9ca3af; flex-shrink: 0; }
+
+    @media (max-width: 576px) {
+      .activity-list { gap: 0.75rem; }
+      .activity-item { gap: 0.75rem; flex-wrap: wrap; }
+      .activity-icon { width: 32px; height: 32px; }
+      .activity-title { font-size: 0.9375rem; }
+      .activity-desc { font-size: 0.8125rem; }
+      .activity-meta { width: 100%; padding-left: 40px; margin-top: -0.25rem; }
+    }
   `]
 })
 export class ActivityListComponent {

@@ -41,6 +41,7 @@ import { CommonModule } from '@angular/common';
       margin-bottom: 1rem;
       padding-bottom: 1rem;
       border-bottom: 1px solid #e5e7eb;
+      gap: 0.75rem;
     }
 
     .card-title {
@@ -58,6 +59,36 @@ import { CommonModule } from '@angular/common';
       margin-top: 1rem;
       padding-top: 1rem;
       border-top: 1px solid #e5e7eb;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        padding: 1.25rem;
+      }
+      .card-header {
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+      }
+      .card-footer {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .card {
+        padding: 1rem;
+      }
+      .card-title {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .card-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
     }
   `]
 })

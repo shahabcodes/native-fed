@@ -21,6 +21,13 @@ import { I18nService } from '@mfe-workspace/shared-i18n';
         (languageToggle)="onLanguageToggle()"
       ></lib-header>
 
+      <!-- Mobile overlay backdrop -->
+      <div
+        class="sidebar-overlay"
+        *ngIf="isMobileView() && !sidebarCollapsed()"
+        (click)="closeSidebar()"
+      ></div>
+
       <lib-sidebar
         [menuItems]="menuItems"
         [collapsed]="sidebarCollapsed()"
@@ -54,14 +61,54 @@ import { I18nService } from '@mfe-workspace/shared-i18n';
     .main-content.sidebar-collapsed { margin-left: 64px; margin-right: 0; }
     .main-content.sidebar-collapsed.rtl { margin-left: 0; margin-right: 64px; }
     .content-wrapper { max-width: 1400px; margin: 0 auto; }
-    @media (max-width: 768px) { .main-content, .main-content.rtl { margin-left: 0; margin-right: 0; } }
+
+    .sidebar-overlay {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 85;
+    }
+
+    @media (max-width: 768px) {
+      .main-content, .main-content.rtl {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .main-content, .main-content.rtl {
+        padding: 0.75rem;
+      }
+    }
   `]
 })
 export class LayoutComponent {
   private authService = inject(AuthService);
   private i18nService = inject(I18nService);
 
-  sidebarCollapsed = signal(false);
+  sidebarCollapsed = signal(true);
+  isMobileView = signal(false);
+
+  constructor() {
+    this.checkMobileView();
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', () => this.checkMobileView());
+    }
+  }
+
+  private checkMobileView(): void {
+    if (typeof window !== 'undefined') {
+      this.isMobileView.set(window.innerWidth <= 768);
+      if (window.innerWidth > 768) {
+        this.sidebarCollapsed.set(false);
+      }
+    }
+  }
   currentLang = this.i18nService.currentLang;
   isRtl = this.i18nService.isRtl;
 
@@ -132,6 +179,10 @@ export class LayoutComponent {
 
   toggleSidebar(): void {
     this.sidebarCollapsed.update(collapsed => !collapsed);
+  }
+
+  closeSidebar(): void {
+    this.sidebarCollapsed.set(true);
   }
 
   onLogout(): void {

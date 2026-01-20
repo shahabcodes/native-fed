@@ -36,13 +36,12 @@ import { InspectionApiService } from '../services/inspection-api.service';
     <ng-template #loading><lib-loading text="Loading inspection..."></lib-loading></ng-template>
   `,
   styles: [`
-    .page-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .page-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
     .page-title { font-size: 1.5rem; font-weight: 700; color: #1f2937; margin: 0; }
     .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    @media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
-    .detail-row { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6; }
+    .detail-row { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6; gap: 1rem; }
     .detail-row:last-child { border-bottom: none; }
-    .label { font-weight: 500; color: #6b7280; }
+    .label { font-weight: 500; color: #6b7280; flex-shrink: 0; }
     .status-badge { font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; font-weight: 500; }
     .status-pending { background: #fef3c7; color: #d97706; }
     .status-in_progress { background: #dbeafe; color: #2563eb; }
@@ -52,6 +51,21 @@ import { InspectionApiService } from '../services/inspection-api.service';
     .priority-medium { background: #fef3c7; color: #d97706; }
     .priority-high { background: #fee2e2; color: #dc2626; }
     .priority-critical { background: #dc2626; color: white; }
+
+    @media (max-width: 768px) {
+      .detail-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .page-header { margin-bottom: 1.5rem; }
+      .page-title { font-size: 1.25rem; }
+    }
+
+    @media (max-width: 576px) {
+      .page-header { gap: 0.75rem; }
+      .page-title { font-size: 1.125rem; }
+    }
+
+    @media (max-width: 400px) {
+      .detail-row { flex-direction: column; gap: 0.25rem; }
+    }
   `]
 })
 export class InspectionDetailComponent implements OnInit {

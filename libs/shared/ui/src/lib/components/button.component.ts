@@ -30,6 +30,7 @@ import { CommonModule } from '@angular/common';
       border-radius: 8px;
       cursor: pointer;
       transition: all 150ms ease-in-out;
+      min-height: 44px;
     }
 
     button:disabled {
@@ -73,6 +74,7 @@ import { CommonModule } from '@angular/common';
     .btn-sm {
       padding: 0.375rem 0.75rem;
       font-size: 0.875rem;
+      min-height: 36px;
     }
 
     .btn-lg {
@@ -91,6 +93,12 @@ import { CommonModule } from '@angular/common';
 
     @keyframes spin {
       to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 576px) {
+      button {
+        padding: 0.5rem 1rem;
+      }
     }
   `]
 })

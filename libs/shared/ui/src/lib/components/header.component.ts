@@ -67,8 +67,10 @@ import { CommonModule } from '@angular/common';
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
       border: none;
       background: none;
       border-radius: 8px;
@@ -149,11 +151,29 @@ import { CommonModule } from '@angular/common';
     }
 
     @media (max-width: 768px) {
+      .header {
+        padding: 0 1rem;
+      }
+      .header-start, .header-end {
+        gap: 0.5rem;
+      }
       .user-name {
         display: none;
       }
       .lang-label {
         display: none;
+      }
+      .app-name {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .header {
+        padding: 0 0.75rem;
+      }
+      .lang-btn {
+        padding: 0.5rem;
       }
     }
   `]
