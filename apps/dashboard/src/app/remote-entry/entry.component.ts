@@ -57,20 +57,20 @@ import { ActivityListComponent } from '../components/activity-list.component';
   `,
   styles: [`
     .page-header { margin-bottom: 2rem; }
-    .page-title { font-size: 1.75rem; font-weight: 700; color: #1f2937; margin: 0 0 0.5rem 0; }
-    .page-subtitle { color: #6b7280; margin: 0; }
+    .page-title { font-size: 1.75rem; font-weight: 700; color: var(--text-primary, #1f2937); margin: 0 0 0.5rem 0; }
+    .page-subtitle { color: var(--text-tertiary, #6b7280); margin: 0; }
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
-    .skeleton-card { height: 100px; background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%); background-size: 200% 100%; animation: skeleton 1.5s infinite; border-radius: 12px; }
+    .skeleton-card { height: 100px; background: linear-gradient(90deg, var(--card-border, #e5e7eb) 25%, var(--demo-bg, #f3f4f6) 50%, var(--card-border, #e5e7eb) 75%); background-size: 200% 100%; animation: skeleton 1.5s infinite; border-radius: 12px; }
     @keyframes skeleton { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     .content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; }
-    .view-all-link { color: #3f51b5; text-decoration: none; font-size: 0.875rem; font-weight: 500; }
-    .view-all-link:hover { color: #002984; }
+    .view-all-link { color: var(--link-color, #3f51b5); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
+    .view-all-link:hover { color: var(--link-hover, #002984); }
     .quick-actions { display: flex; flex-direction: column; gap: 1rem; }
     .action-btn { display: flex; align-items: center; gap: 0.75rem; padding: 1rem; border-radius: 10px; text-decoration: none; transition: all 150ms; min-height: 44px; }
-    .action-primary { background-color: #3f51b5; color: white; }
-    .action-primary:hover { background-color: #002984; }
-    .action-secondary { background-color: #f3f4f6; color: #374151; }
-    .action-secondary:hover { background-color: #e5e7eb; }
+    .action-primary { background-color: var(--btn-primary-bg, #3f51b5); color: var(--btn-primary-text, white); }
+    .action-primary:hover { background-color: var(--btn-primary-bg-hover, #002984); }
+    .action-secondary { background-color: var(--demo-bg, #f3f4f6); color: var(--text-secondary, #374151); }
+    .action-secondary:hover { background-color: var(--card-border, #e5e7eb); }
     .action-icon { display: flex; }
 
     @media (max-width: 1024px) {

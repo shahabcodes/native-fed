@@ -1,5 +1,6 @@
 @use 'variables' as *;
 @use 'mixins' as *;
+@use 'theme';
 @use 'components';
 @use 'utilities';
 
@@ -17,14 +18,17 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary, $gray-100);
 }
 
 body {
   font-family: $font-family-base;
   font-size: $font-size-base;
   line-height: $line-height-base;
-  color: $gray-900;
-  background-color: $gray-100;
+  color: var(--text-primary, $gray-900);
+  background-color: var(--bg-primary, $gray-100);
+  transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
+  min-height: 100vh;
 
   [dir='rtl'] & {
     font-family: $font-family-arabic;
@@ -50,12 +54,12 @@ p {
 }
 
 a {
-  color: $primary-color;
+  color: var(--link-color, $primary-color);
   text-decoration: none;
   transition: color $transition-fast;
 
   &:hover {
-    color: $primary-dark;
+    color: var(--link-hover, $primary-dark);
   }
 }
 
@@ -73,14 +77,14 @@ img {
 
 // Focus Styles
 :focus-visible {
-  outline: 2px solid $primary-color;
+  outline: 2px solid var(--link-color, $primary-color);
   outline-offset: 2px;
 }
 
 // Selection
 ::selection {
-  background-color: rgba($primary-color, 0.2);
-  color: $gray-900;
+  background-color: var(--selection-bg, rgba($primary-color, 0.2));
+  color: var(--selection-text, $gray-900);
 }
 
 // Scrollbar Styling
@@ -90,14 +94,14 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: $gray-100;
+  background: var(--scrollbar-track, $gray-100);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: $gray-400;
+  background: var(--scrollbar-thumb, $gray-400);
   border-radius: 4px;
 
   &:hover {
-    background: $gray-500;
+    background: var(--scrollbar-thumb-hover, $gray-500);
   }
 }

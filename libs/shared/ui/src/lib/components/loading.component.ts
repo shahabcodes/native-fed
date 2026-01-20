@@ -27,13 +27,13 @@ import { CommonModule } from '@angular/common';
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: rgba(255, 255, 255, 0.9);
+      background-color: var(--bg-primary, rgba(255, 255, 255, 0.9));
       z-index: 1000;
     }
 
     .spinner {
-      border: 3px solid #e5e7eb;
-      border-top-color: #3f51b5;
+      border: 3px solid var(--card-border, #e5e7eb);
+      border-top-color: var(--btn-primary-bg, #3f51b5);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
@@ -56,7 +56,7 @@ import { CommonModule } from '@angular/common';
     }
 
     .loading-text {
-      color: #6b7280;
+      color: var(--text-tertiary, #6b7280);
       font-size: 0.9375rem;
       margin: 0;
     }

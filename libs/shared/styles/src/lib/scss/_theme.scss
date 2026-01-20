@@ -1,0 +1,139 @@
+// Theme CSS Custom Properties
+// Light theme (default)
+:root,
+[data-theme='light'] {
+  // Background colors
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-gradient-start: #667eea;
+  --bg-gradient-end: #764ba2;
+
+  // Text colors
+  --text-primary: #212121;
+  --text-secondary: #4b5563;
+  --text-tertiary: #6b7280;
+
+  // Form elements
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --input-text: #374151;
+  --input-placeholder: #9ca3af;
+  --input-focus-border: #3f51b5;
+  --input-focus-shadow: rgba(63, 81, 181, 0.1);
+
+  // Card styling
+  --card-bg: #ffffff;
+  --card-shadow: rgba(0, 0, 0, 0.08);
+  --card-shadow-hover: rgba(0, 0, 0, 0.12);
+  --card-border: #e5e7eb;
+
+  // Button colors
+  --btn-primary-bg: #3f51b5;
+  --btn-primary-bg-hover: #002984;
+  --btn-primary-text: #ffffff;
+  --btn-secondary-bg: transparent;
+  --btn-secondary-text: #3f51b5;
+  --btn-secondary-border: #3f51b5;
+  --btn-secondary-bg-hover: rgba(63, 81, 181, 0.1);
+
+  // Alert colors
+  --alert-error-bg: #fee2e2;
+  --alert-error-border: #fecaca;
+  --alert-error-text: #dc2626;
+
+  // Demo/info section
+  --demo-bg: #f3f4f6;
+  --demo-text: #6b7280;
+  --demo-text-strong: #374151;
+
+  // Toggle button
+  --toggle-bg: rgba(255, 255, 255, 0.2);
+  --toggle-border: rgba(255, 255, 255, 0.3);
+  --toggle-bg-hover: rgba(255, 255, 255, 0.3);
+  --toggle-text: #ffffff;
+
+  // Checkbox
+  --checkbox-accent: #3f51b5;
+
+  // Links
+  --link-color: #3f51b5;
+  --link-hover: #002984;
+
+  // Selection
+  --selection-bg: rgba(63, 81, 181, 0.2);
+  --selection-text: #212121;
+
+  // Scrollbar
+  --scrollbar-track: #f5f5f5;
+  --scrollbar-thumb: #bdbdbd;
+  --scrollbar-thumb-hover: #9e9e9e;
+}
+
+// Dark theme - Modern & Sleek
+[data-theme='dark'] {
+  // Background colors - Clean neutral grays
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-gradient-start: #0f172a;
+  --bg-gradient-end: #1e293b;
+
+  // Text colors - High contrast for readability
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-tertiary: #94a3b8;
+
+  // Form elements
+  --input-bg: #1e1e1e;
+  --input-border: #333333;
+  --input-text: #f1f5f9;
+  --input-placeholder: #6b7280;
+  --input-focus-border: #3b82f6;
+  --input-focus-shadow: rgba(59, 130, 246, 0.25);
+
+  // Card styling - Elevated surfaces
+  --card-bg: #171717;
+  --card-shadow: rgba(0, 0, 0, 0.5);
+  --card-shadow-hover: rgba(0, 0, 0, 0.7);
+  --card-border: #2a2a2a;
+
+  // Button colors - Vibrant blue accent
+  --btn-primary-bg: #3b82f6;
+  --btn-primary-bg-hover: #2563eb;
+  --btn-primary-text: #ffffff;
+  --btn-secondary-bg: transparent;
+  --btn-secondary-text: #3b82f6;
+  --btn-secondary-border: #3b82f6;
+  --btn-secondary-bg-hover: rgba(59, 130, 246, 0.1);
+
+  // Alert colors
+  --alert-error-bg: rgba(239, 68, 68, 0.12);
+  --alert-error-border: rgba(239, 68, 68, 0.25);
+  --alert-error-text: #fca5a5;
+
+  // Demo/info section
+  --demo-bg: #1e1e1e;
+  --demo-text: #94a3b8;
+  --demo-text-strong: #cbd5e1;
+
+  // Toggle button (login page)
+  --toggle-bg: rgba(255, 255, 255, 0.08);
+  --toggle-border: rgba(255, 255, 255, 0.15);
+  --toggle-bg-hover: rgba(255, 255, 255, 0.12);
+  --toggle-text: #f1f5f9;
+
+  // Checkbox
+  --checkbox-accent: #3b82f6;
+
+  // Links
+  --link-color: #60a5fa;
+  --link-hover: #93c5fd;
+
+  // Selection
+  --selection-bg: rgba(59, 130, 246, 0.35);
+  --selection-text: #f1f5f9;
+
+  // Scrollbar
+  --scrollbar-track: #0a0a0a;
+  --scrollbar-thumb: #333333;
+  --scrollbar-thumb-hover: #444444;
+}

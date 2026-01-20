@@ -39,22 +39,22 @@ import { CommonModule } from '@angular/common';
     }
 
     .btn-primary {
-      background-color: #3f51b5;
-      color: white;
+      background-color: var(--btn-primary-bg, #3f51b5);
+      color: var(--btn-primary-text, white);
     }
 
     .btn-primary:hover:not(:disabled) {
-      background-color: #002984;
+      background-color: var(--btn-primary-bg-hover, #002984);
     }
 
     .btn-secondary {
-      background-color: transparent;
-      color: #3f51b5;
-      border: 1px solid #3f51b5;
+      background-color: var(--btn-secondary-bg, transparent);
+      color: var(--btn-secondary-text, #3f51b5);
+      border: 1px solid var(--btn-secondary-border, #3f51b5);
     }
 
     .btn-secondary:hover:not(:disabled) {
-      background-color: rgba(63, 81, 181, 0.1);
+      background-color: var(--btn-secondary-bg-hover, rgba(63, 81, 181, 0.1));
     }
 
     .btn-danger {

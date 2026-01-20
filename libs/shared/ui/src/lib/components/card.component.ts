@@ -23,15 +23,15 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [`
     .card {
-      background-color: white;
+      background-color: var(--card-bg, white);
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 8px var(--card-shadow, rgba(0, 0, 0, 0.08));
       padding: 1.5rem;
-      transition: box-shadow 200ms ease-in-out;
+      transition: box-shadow 200ms ease-in-out, background-color 200ms ease-in-out;
     }
 
     .card-hoverable:hover {
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 4px 16px var(--card-shadow-hover, rgba(0, 0, 0, 0.12));
     }
 
     .card-header {
@@ -40,25 +40,25 @@ import { CommonModule } from '@angular/common';
       justify-content: space-between;
       margin-bottom: 1rem;
       padding-bottom: 1rem;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid var(--card-border, #e5e7eb);
       gap: 0.75rem;
     }
 
     .card-title {
       font-size: 1.125rem;
       font-weight: 600;
-      color: #1f2937;
+      color: var(--text-primary, #1f2937);
       margin: 0;
     }
 
     .card-body {
-      color: #4b5563;
+      color: var(--text-secondary, #4b5563);
     }
 
     .card-footer {
       margin-top: 1rem;
       padding-top: 1rem;
-      border-top: 1px solid #e5e7eb;
+      border-top: 1px solid var(--card-border, #e5e7eb);
     }
 
     @media (max-width: 768px) {

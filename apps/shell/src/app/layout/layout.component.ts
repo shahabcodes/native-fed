@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent, SidebarComponent, MenuItem } from '@mfe-workspace/shared-ui';
-import { AuthService } from '@mfe-workspace/shared-services';
+import { AuthService, ThemeService } from '@mfe-workspace/shared-services';
 import { I18nService } from '@mfe-workspace/shared-i18n';
 
 @Component({
@@ -16,9 +16,11 @@ import { I18nService } from '@mfe-workspace/shared-i18n';
         [username]="userName()"
         [currentLang]="currentLang()"
         [isRtl]="isRtl()"
+        [isDark]="isDark()"
         (menuToggle)="toggleSidebar()"
         (logout)="onLogout()"
         (languageToggle)="onLanguageToggle()"
+        (themeToggle)="onThemeToggle()"
       ></lib-header>
 
       <!-- Mobile overlay backdrop -->
@@ -43,7 +45,11 @@ import { I18nService } from '@mfe-workspace/shared-i18n';
     </div>
   `,
   styles: [`
-    .layout { min-height: 100vh; }
+    .layout {
+      min-height: 100vh;
+      background-color: var(--bg-primary, #f5f5f5);
+      transition: background-color 200ms;
+    }
     .layout.rtl { direction: rtl; }
     .main-content {
       margin-left: 260px;
@@ -51,8 +57,8 @@ import { I18nService } from '@mfe-workspace/shared-i18n';
       margin-top: 64px;
       min-height: calc(100vh - 64px);
       padding: 1.5rem;
-      transition: margin 300ms ease-in-out;
-      background-color: #f5f5f5;
+      transition: margin 300ms ease-in-out, background-color 200ms;
+      background-color: var(--bg-primary, #f5f5f5);
     }
     .main-content.rtl {
       margin-left: 0;
@@ -73,7 +79,7 @@ import { I18nService } from '@mfe-workspace/shared-i18n';
     }
 
     @media (max-width: 768px) {
-      .main-content, .main-content.rtl {
+      .main-content, .main-content.rtl, .main-content.sidebar-collapsed, .main-content.sidebar-collapsed.rtl {
         margin-left: 0;
         margin-right: 0;
         padding: 1rem;
@@ -90,6 +96,7 @@ import { I18nService } from '@mfe-workspace/shared-i18n';
 export class LayoutComponent {
   private authService = inject(AuthService);
   private i18nService = inject(I18nService);
+  private themeService = inject(ThemeService);
 
   sidebarCollapsed = signal(true);
   isMobileView = signal(false);
@@ -111,6 +118,7 @@ export class LayoutComponent {
   }
   currentLang = this.i18nService.currentLang;
   isRtl = this.i18nService.isRtl;
+  isDark = this.themeService.isDark;
 
   menuItems: MenuItem[] = [
     {
@@ -191,5 +199,9 @@ export class LayoutComponent {
 
   onLanguageToggle(): void {
     this.i18nService.toggleLanguage();
+  }
+
+  onThemeToggle(): void {
+    this.themeService.toggleTheme();
   }
 }

@@ -16,24 +16,25 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [`
     .stats-card {
-      background: white;
+      background: var(--card-bg, white);
       border-radius: 12px;
       padding: 1.5rem;
       display: flex;
       align-items: center;
       gap: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 2px 8px var(--card-shadow, rgba(0,0,0,0.08));
+      transition: background-color 200ms, box-shadow 200ms;
     }
     .stats-icon {
       width: 48px; height: 48px;
       border-radius: 12px;
-      background-color: color-mix(in srgb, var(--accent-color) 15%, white);
+      background-color: color-mix(in srgb, var(--accent-color) 15%, var(--card-bg, white));
       color: var(--accent-color);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .stats-value { font-size: 1.75rem; font-weight: 700; color: #1f2937; }
-    .stats-label { font-size: 0.875rem; color: #6b7280; }
+    .stats-value { font-size: 1.75rem; font-weight: 700; color: var(--text-primary, #1f2937); }
+    .stats-label { font-size: 0.875rem; color: var(--text-tertiary, #6b7280); }
 
     @media (max-width: 768px) {
       .stats-card { padding: 1.25rem; }

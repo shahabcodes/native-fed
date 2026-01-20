@@ -86,9 +86,9 @@ export interface MenuItem {
       left: 0;
       bottom: 0;
       width: 260px;
-      background-color: white;
-      border-inline-end: 1px solid #e5e7eb;
-      transition: width 300ms ease-in-out;
+      background-color: var(--card-bg, white);
+      border-inline-end: 1px solid var(--card-border, #e5e7eb);
+      transition: width 300ms ease-in-out, background-color 200ms, border-color 200ms;
       z-index: 90;
       overflow-y: auto;
     }
@@ -115,7 +115,7 @@ export interface MenuItem {
       gap: 0.75rem;
       padding: 0.75rem 1rem;
       border-radius: 8px;
-      color: #6b7280;
+      color: var(--text-tertiary, #6b7280);
       text-decoration: none;
       transition: all 150ms;
       border: none;
@@ -128,13 +128,13 @@ export interface MenuItem {
     }
 
     .nav-item:hover {
-      background-color: #f3f4f6;
-      color: #1f2937;
+      background-color: var(--demo-bg, #f3f4f6);
+      color: var(--text-primary, #1f2937);
     }
 
     .nav-item.active {
-      background-color: #eff6ff;
-      color: #3f51b5;
+      background-color: var(--btn-secondary-bg-hover, #eff6ff);
+      color: var(--btn-primary-bg, #3f51b5);
     }
 
     .nav-parent {
@@ -142,8 +142,8 @@ export interface MenuItem {
     }
 
     .nav-parent.expanded {
-      background-color: #f9fafb;
-      color: #1f2937;
+      background-color: var(--demo-bg, #f9fafb);
+      color: var(--text-primary, #1f2937);
     }
 
     .nav-icon {
@@ -180,7 +180,7 @@ export interface MenuItem {
       display: flex;
       align-items: center;
       transition: transform 200ms ease-in-out;
-      color: #9ca3af;
+      color: var(--text-tertiary, #9ca3af);
     }
 
     .nav-arrow.rotated {
@@ -206,7 +206,7 @@ export interface MenuItem {
       gap: 0.125rem;
       padding-inline-start: 1rem;
       margin-top: 0.25rem;
-      border-inline-start: 2px solid #e5e7eb;
+      border-inline-start: 2px solid var(--card-border, #e5e7eb);
       margin-inline-start: 1.5rem;
     }
 

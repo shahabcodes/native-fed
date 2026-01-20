@@ -50,19 +50,20 @@ import { InspectionCardComponent } from '../components/inspection-card.component
   `,
   styles: [`
     .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
-    .page-title { font-size: 1.75rem; font-weight: 700; color: #1f2937; margin: 0 0 0.5rem 0; }
-    .page-subtitle { color: #6b7280; margin: 0; }
+    .page-title { font-size: 1.75rem; font-weight: 700; color: var(--text-primary, #1f2937); margin: 0 0 0.5rem 0; }
+    .page-subtitle { color: var(--text-tertiary, #6b7280); margin: 0; }
     .filters-bar { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
-    .search-input { max-width: 400px; padding: 0.75rem 1rem; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 0.9375rem; min-height: 44px; }
-    .search-input:focus { outline: none; border-color: #3f51b5; box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.1); }
+    .search-input { max-width: 400px; padding: 0.75rem 1rem; border: 1px solid var(--input-border, #e5e7eb); background-color: var(--input-bg, white); color: var(--input-text, #374151); border-radius: 8px; font-size: 0.9375rem; min-height: 44px; transition: all 150ms; }
+    .search-input::placeholder { color: var(--input-placeholder, #9ca3af); }
+    .search-input:focus { outline: none; border-color: var(--input-focus-border, #3f51b5); box-shadow: 0 0 0 3px var(--input-focus-shadow, rgba(63, 81, 181, 0.1)); }
     .filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-    .filter-tab { padding: 0.5rem 1rem; border: 1px solid #e5e7eb; border-radius: 9999px; background: white; font-size: 0.875rem; font-weight: 500; color: #6b7280; cursor: pointer; transition: all 150ms; text-decoration: none; min-height: 36px; display: inline-flex; align-items: center; white-space: nowrap; }
-    .filter-tab:hover { border-color: #3f51b5; color: #3f51b5; }
-    .filter-tab.active { background: #3f51b5; border-color: #3f51b5; color: white; }
+    .filter-tab { padding: 0.5rem 1rem; border: 1px solid var(--card-border, #e5e7eb); border-radius: 9999px; background: var(--card-bg, white); font-size: 0.875rem; font-weight: 500; color: var(--text-tertiary, #6b7280); cursor: pointer; transition: all 150ms; text-decoration: none; min-height: 36px; display: inline-flex; align-items: center; white-space: nowrap; }
+    .filter-tab:hover { border-color: var(--btn-primary-bg, #3f51b5); color: var(--btn-primary-bg, #3f51b5); }
+    .filter-tab.active { background: var(--btn-primary-bg, #3f51b5); border-color: var(--btn-primary-bg, #3f51b5); color: var(--btn-primary-text, white); }
     .inspections-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
-    .empty-state { display: flex; flex-direction: column; align-items: center; padding: 4rem 2rem; text-align: center; background: white; border-radius: 12px; }
-    .empty-state h3 { font-size: 1.25rem; color: #374151; margin: 0 0 0.5rem 0; }
-    .empty-state p { color: #6b7280; margin: 0 0 1.5rem 0; }
+    .empty-state { display: flex; flex-direction: column; align-items: center; padding: 4rem 2rem; text-align: center; background: var(--card-bg, white); border-radius: 12px; }
+    .empty-state h3 { font-size: 1.25rem; color: var(--text-secondary, #374151); margin: 0 0 0.5rem 0; }
+    .empty-state p { color: var(--text-tertiary, #6b7280); margin: 0 0 1.5rem 0; }
 
     @media (max-width: 768px) {
       .page-header { margin-bottom: 1.5rem; }

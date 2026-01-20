@@ -37,17 +37,17 @@ import { InspectionApiService } from '../services/inspection-api.service';
   `,
   styles: [`
     .page-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
-    .page-title { font-size: 1.5rem; font-weight: 700; color: #1f2937; margin: 0; }
+    .page-title { font-size: 1.5rem; font-weight: 700; color: var(--text-primary, #1f2937); margin: 0; }
     .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .detail-row { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid #f3f4f6; gap: 1rem; }
+    .detail-row { display: flex; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid var(--demo-bg, #f3f4f6); gap: 1rem; color: var(--text-primary, #1f2937); }
     .detail-row:last-child { border-bottom: none; }
-    .label { font-weight: 500; color: #6b7280; flex-shrink: 0; }
+    .label { font-weight: 500; color: var(--text-tertiary, #6b7280); flex-shrink: 0; }
     .status-badge { font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 9999px; font-weight: 500; }
     .status-pending { background: #fef3c7; color: #d97706; }
     .status-in_progress { background: #dbeafe; color: #2563eb; }
     .status-completed { background: #dcfce7; color: #16a34a; }
     .priority-badge { font-size: 0.75rem; padding: 0.125rem 0.5rem; border-radius: 4px; text-transform: uppercase; font-weight: 600; }
-    .priority-low { background: #f3f4f6; color: #6b7280; }
+    .priority-low { background: var(--demo-bg, #f3f4f6); color: var(--text-tertiary, #6b7280); }
     .priority-medium { background: #fef3c7; color: #d97706; }
     .priority-high { background: #fee2e2; color: #dc2626; }
     .priority-critical { background: #dc2626; color: white; }
