@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { RecentActivity } from '@mfe-workspace/shared-services';
 
 @Component({
@@ -10,7 +11,7 @@ import { RecentActivity } from '@mfe-workspace/shared-services';
     <div class="activity-list">
       <div class="activity-item" *ngFor="let activity of activities">
         <div class="activity-icon" [class]="'icon-' + activity.type">
-          <span [innerHTML]="getIcon(activity.type)"></span>
+          <span [innerHTML]="getSanitizedIcon(activity.type)"></span>
         </div>
         <div class="activity-content">
           <div class="activity-title">{{ activity.title }}</div>
@@ -48,14 +49,24 @@ import { RecentActivity } from '@mfe-workspace/shared-services';
   `]
 })
 export class ActivityListComponent {
+  private sanitizer = inject(DomSanitizer);
+  private iconCache = new Map<string, SafeHtml>();
+
   @Input() activities: RecentActivity[] = [];
 
-  getIcon(type: string): string {
-    const icons: Record<string, string> = {
-      completed: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>',
-      created: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
-      updated: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>'
-    };
-    return icons[type] || '';
+  private icons: Record<string, string> = {
+    completed: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+    created: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
+    updated: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>'
+  };
+
+  getSanitizedIcon(type: string): SafeHtml {
+    let cached = this.iconCache.get(type);
+    if (!cached) {
+      const icon = this.icons[type] || '';
+      cached = this.sanitizer.bypassSecurityTrustHtml(icon);
+      this.iconCache.set(type, cached);
+    }
+    return cached;
   }
 }
