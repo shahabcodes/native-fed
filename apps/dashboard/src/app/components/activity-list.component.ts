@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RecentActivity } from '../services/dashboard-api.service';
+import { RecentActivity } from '@mfe-workspace/shared-services';
 
 @Component({
   selector: 'app-activity-list',

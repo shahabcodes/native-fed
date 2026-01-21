@@ -1,0 +1,5 @@
+{
+  "login": "https://staging.example.com/login/remoteEntry.json",
+  "dashboard": "https://staging.example.com/dashboard/remoteEntry.json",
+  "inspection": "https://staging.example.com/inspection/remoteEntry.json"
+}

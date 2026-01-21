@@ -1,6 +1,7 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 export interface MenuItem {
   id?: string;
@@ -30,8 +31,9 @@ export interface MenuItem {
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: item.exactMatch !== false }"
             class="nav-item"
+            [title]="collapsed ? getLabel(item) : ''"
           >
-            <span class="nav-icon" [innerHTML]="item.icon"></span>
+            <span class="nav-icon" [innerHTML]="sanitizeIcon(item.icon)"></span>
             <span class="nav-label" *ngIf="!collapsed">
               {{ getLabel(item) }}
             </span>
@@ -39,13 +41,17 @@ export interface MenuItem {
           </a>
 
           <!-- Nested menu item (has children) -->
-          <div *ngIf="item.children && item.children.length > 0" class="nav-group">
+          <div *ngIf="item.children && item.children.length > 0" class="nav-group"
+               (mouseenter)="onGroupHover(item, true)"
+               (mouseleave)="onGroupHover(item, false)">
             <button
               class="nav-item nav-parent"
               [class.expanded]="isExpanded(item)"
+              [class.flyout-open]="collapsed && isHovered(item)"
               (click)="toggleExpand(item)"
+              [title]="collapsed ? getLabel(item) : ''"
             >
-              <span class="nav-icon" [innerHTML]="item.icon"></span>
+              <span class="nav-icon" [innerHTML]="sanitizeIcon(item.icon)"></span>
               <span class="nav-label" *ngIf="!collapsed">
                 {{ getLabel(item) }}
               </span>
@@ -57,7 +63,7 @@ export interface MenuItem {
               </span>
             </button>
 
-            <!-- Children submenu -->
+            <!-- Children submenu (expanded mode) -->
             <div class="nav-children" *ngIf="!collapsed && isExpanded(item)">
               <a
                 *ngFor="let child of item.children"
@@ -67,7 +73,31 @@ export interface MenuItem {
                 [routerLinkActiveOptions]="{ exact: true }"
                 class="nav-item nav-child"
               >
-                <span class="nav-icon child-icon" [innerHTML]="child.icon"></span>
+                <span class="nav-icon child-icon" [innerHTML]="sanitizeIcon(child.icon)"></span>
+                <span class="nav-label">
+                  {{ getLabel(child) }}
+                </span>
+                <span class="nav-badge" *ngIf="child.badge">{{ child.badge }}</span>
+              </a>
+            </div>
+
+            <!-- Flyout menu (collapsed mode) -->
+            <div class="nav-flyout"
+                 *ngIf="collapsed && isHovered(item)"
+                 [class.rtl]="isRtl"
+                 (mouseenter)="onGroupHover(item, true)"
+                 (mouseleave)="onGroupHover(item, false)">
+              <div class="flyout-header">{{ getLabel(item) }}</div>
+              <a
+                *ngFor="let child of item.children"
+                [routerLink]="child.route"
+                [queryParams]="child.queryParams"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                class="nav-item nav-child flyout-item"
+                (click)="onFlyoutItemClick()"
+              >
+                <span class="nav-icon child-icon" [innerHTML]="sanitizeIcon(child.icon)"></span>
                 <span class="nav-label">
                   {{ getLabel(child) }}
                 </span>
@@ -100,6 +130,7 @@ export interface MenuItem {
 
     .sidebar.collapsed {
       width: 64px;
+      overflow: visible;
     }
 
     .sidebar-nav {
@@ -141,14 +172,24 @@ export interface MenuItem {
       position: relative;
     }
 
-    .nav-parent.expanded {
+    .nav-parent.expanded,
+    .nav-parent.flyout-open {
       background-color: var(--demo-bg, #f9fafb);
       color: var(--text-primary, #1f2937);
     }
 
     .nav-icon {
       display: flex;
+      align-items: center;
+      justify-content: center;
       flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+    }
+
+    .nav-icon ::ng-deep svg {
+      width: 24px;
+      height: 24px;
     }
 
     .child-icon {
@@ -156,9 +197,9 @@ export interface MenuItem {
       height: 20px;
     }
 
-    .child-icon :deep(svg) {
-      width: 18px;
-      height: 18px;
+    .child-icon ::ng-deep svg {
+      width: 20px;
+      height: 20px;
     }
 
     .nav-label {
@@ -198,6 +239,7 @@ export interface MenuItem {
     .nav-group {
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     .nav-children {
@@ -226,6 +268,66 @@ export interface MenuItem {
 
     .collapsed .nav-children {
       display: none;
+    }
+
+    /* Flyout menu styles */
+    .nav-flyout {
+      position: absolute;
+      left: calc(100% - 8px);
+      top: -8px;
+      min-width: 200px;
+      background-color: var(--card-bg, white);
+      border: 1px solid var(--card-border, #e5e7eb);
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      padding: 0.5rem;
+      padding-left: 16px;
+      z-index: 100;
+    }
+
+    .nav-flyout::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 0;
+      bottom: 0;
+      width: 16px;
+      background: transparent;
+    }
+
+    .nav-flyout.rtl {
+      left: auto;
+      right: calc(100% - 8px);
+      padding-left: 0.5rem;
+      padding-right: 16px;
+    }
+
+    .nav-flyout.rtl::before {
+      left: auto;
+      right: -8px;
+    }
+
+    .flyout-header {
+      padding: 0.5rem 0.75rem;
+      font-weight: 600;
+      color: var(--text-primary, #1f2937);
+      font-size: 0.875rem;
+      border-bottom: 1px solid var(--card-border, #e5e7eb);
+      margin-bottom: 0.25rem;
+    }
+
+    .flyout-item {
+      justify-content: flex-start !important;
+      padding: 0.5rem 0.75rem !important;
+      gap: 0.5rem !important;
+    }
+
+    .flyout-item .nav-icon {
+      opacity: 0.7;
+    }
+
+    .flyout-item:hover .nav-icon {
+      opacity: 1;
     }
 
     @media (max-width: 768px) {
@@ -257,12 +359,28 @@ export interface MenuItem {
   `]
 })
 export class SidebarComponent {
+  private sanitizer = inject(DomSanitizer);
+
   @Input() menuItems: MenuItem[] = [];
   @Input() collapsed = false;
   @Input() currentLang = 'en';
   @Input() isRtl = false;
 
   private expandedItems = signal<Set<string>>(new Set());
+  private hoveredItems = signal<Set<string>>(new Set());
+  private iconCache = new Map<string, SafeHtml>();
+  private hoverTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
+
+  sanitizeIcon(icon: string): SafeHtml {
+    if (!icon) return '';
+
+    let cached = this.iconCache.get(icon);
+    if (!cached) {
+      cached = this.sanitizer.bypassSecurityTrustHtml(icon);
+      this.iconCache.set(icon, cached);
+    }
+    return cached;
+  }
 
   getLabel(item: MenuItem): string {
     return this.currentLang === 'ar' && item.labelAr ? item.labelAr : item.label;
@@ -276,7 +394,12 @@ export class SidebarComponent {
     return this.expandedItems().has(this.getItemId(item));
   }
 
+  isHovered(item: MenuItem): boolean {
+    return this.hoveredItems().has(this.getItemId(item));
+  }
+
   toggleExpand(item: MenuItem): void {
+    if (this.collapsed) return;
     const id = this.getItemId(item);
     this.expandedItems.update(set => {
       const newSet = new Set(set);
@@ -287,5 +410,44 @@ export class SidebarComponent {
       }
       return newSet;
     });
+  }
+
+  onGroupHover(item: MenuItem, isHovering: boolean): void {
+    if (!this.collapsed) return;
+    const id = this.getItemId(item);
+
+    // Clear any existing timeout for this item
+    const existingTimeout = this.hoverTimeouts.get(id);
+    if (existingTimeout) {
+      clearTimeout(existingTimeout);
+      this.hoverTimeouts.delete(id);
+    }
+
+    if (isHovering) {
+      // Show immediately on hover
+      this.hoveredItems.update(set => {
+        const newSet = new Set(set);
+        newSet.add(id);
+        return newSet;
+      });
+    } else {
+      // Delay hiding to allow cursor to move to flyout
+      const timeout = setTimeout(() => {
+        this.hoveredItems.update(set => {
+          const newSet = new Set(set);
+          newSet.delete(id);
+          return newSet;
+        });
+        this.hoverTimeouts.delete(id);
+      }, 150);
+      this.hoverTimeouts.set(id, timeout);
+    }
+  }
+
+  onFlyoutItemClick(): void {
+    // Clear all hover states when a flyout item is clicked
+    this.hoveredItems.set(new Set());
+    this.hoverTimeouts.forEach(timeout => clearTimeout(timeout));
+    this.hoverTimeouts.clear();
   }
 }

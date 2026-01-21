@@ -1,4 +1,5 @@
 import { initFederation } from '@angular-architects/native-federation';
+import { environment } from './environments/environment';
 
 function showFederationError(error: Error): void {
   const errorHtml = `
@@ -69,7 +70,7 @@ function showFederationError(error: Error): void {
   document.body.innerHTML = errorHtml;
 }
 
-initFederation('/assets/federation.manifest.json')
+initFederation(environment.federationManifestPath)
   .catch((err) => {
     console.error('Federation initialization failed:', err);
     showFederationError(err);

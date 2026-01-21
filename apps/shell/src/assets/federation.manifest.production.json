@@ -1,0 +1,5 @@
+{
+  "login": "https://app.example.com/login/remoteEntry.json",
+  "dashboard": "https://app.example.com/dashboard/remoteEntry.json",
+  "inspection": "https://app.example.com/inspection/remoteEntry.json"
+}

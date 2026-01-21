@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-stats-card',
@@ -7,7 +8,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="stats-card" [style.--accent-color]="color">
-      <div class="stats-icon" [innerHTML]="icon"></div>
+      <div class="stats-icon" [innerHTML]="sanitizedIcon"></div>
       <div class="stats-content">
         <div class="stats-value">{{ value }}</div>
         <div class="stats-label">{{ label }}</div>
@@ -51,8 +52,14 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class StatsCardComponent {
+  private sanitizer = inject(DomSanitizer);
+
   @Input() value: number | string = 0;
   @Input() label = '';
   @Input() icon = '';
   @Input() color = '#3f51b5';
+
+  get sanitizedIcon(): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(this.icon);
+  }
 }

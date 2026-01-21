@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CardComponent, LoadingComponent } from '@mfe-workspace/shared-ui';
 import { TranslatePipe } from '@mfe-workspace/shared-i18n';
-import { DashboardApiService, DashboardStats, RecentActivity } from '../services/dashboard-api.service';
+import { DashboardStats, RecentActivity } from '@mfe-workspace/shared-services';
+import { DashboardApiService } from '../services/dashboard-api.service';
 import { StatsCardComponent } from '../components/stats-card.component';
 import { ActivityListComponent } from '../components/activity-list.component';
 

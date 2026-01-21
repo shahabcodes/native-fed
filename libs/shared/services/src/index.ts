@@ -6,6 +6,7 @@ export * from './lib/auth/auth.guard';
 export * from './lib/models/user.model';
 export * from './lib/models/inspection.model';
 export * from './lib/models/error.model';
+export * from './lib/models/dashboard.model';
 
 // Theme
 export * from './lib/theme/theme.service';

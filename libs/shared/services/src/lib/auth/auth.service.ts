@@ -3,6 +3,11 @@ import { Router } from '@angular/router';
 import { User, LoginCredentials, LoginResponse, AuthState } from '../models/user.model';
 import { StorageService } from '../storage/storage.service';
 import { LoggerService } from '../logger/logger.service';
+import {
+  findMockUser,
+  createMockLoginResponse,
+  MOCK_DELAYS,
+} from '@mfe-workspace/shared-mocks';
 
 const TOKEN_KEY = 'mfe_auth_token';
 const USER_KEY = 'mfe_auth_user';
@@ -121,40 +126,13 @@ export class AuthService {
   private mockLoginApi(credentials: LoginCredentials): Promise<LoginResponse | null> {
     return new Promise((resolve) => {
       setTimeout(() => {
-        if (credentials.email === 'admin@example.com' && credentials.password === 'password') {
-          resolve({
-            user: {
-              id: '1',
-              email: credentials.email,
-              firstName: 'Admin',
-              lastName: 'User',
-              role: 'admin',
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString()
-            },
-            token: 'mock-jwt-token-' + Date.now(),
-            refreshToken: 'mock-refresh-token-' + Date.now(),
-            expiresIn: 3600
-          });
-        } else if (credentials.email === 'inspector@example.com' && credentials.password === 'password') {
-          resolve({
-            user: {
-              id: '2',
-              email: credentials.email,
-              firstName: 'John',
-              lastName: 'Inspector',
-              role: 'inspector',
-              createdAt: new Date().toISOString(),
-              updatedAt: new Date().toISOString()
-            },
-            token: 'mock-jwt-token-' + Date.now(),
-            refreshToken: 'mock-refresh-token-' + Date.now(),
-            expiresIn: 3600
-          });
+        const mockUser = findMockUser(credentials);
+        if (mockUser) {
+          resolve(createMockLoginResponse(mockUser));
         } else {
           resolve(null);
         }
-      }, 800);
+      }, MOCK_DELAYS.AUTH);
     });
   }
 }
