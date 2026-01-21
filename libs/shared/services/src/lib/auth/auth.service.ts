@@ -1,7 +1,8 @@
-import { Injectable, signal, computed, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable, signal, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { User, LoginCredentials, LoginResponse, AuthState } from '../models/user.model';
+import { StorageService } from '../storage/storage.service';
+import { LoggerService } from '../logger/logger.service';
 
 const TOKEN_KEY = 'mfe_auth_token';
 const USER_KEY = 'mfe_auth_user';
@@ -10,8 +11,9 @@ const USER_KEY = 'mfe_auth_user';
   providedIn: 'root'
 })
 export class AuthService {
-  private platformId = inject(PLATFORM_ID);
   private router = inject(Router);
+  private storage = inject(StorageService);
+  private logger = inject(LoggerService);
 
   private _state = signal<AuthState>({
     user: null,
@@ -32,24 +34,18 @@ export class AuthService {
   }
 
   private initializeAuth(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem(TOKEN_KEY);
-      const userStr = localStorage.getItem(USER_KEY);
+    const token = this.storage.getString(TOKEN_KEY);
+    const user = this.storage.get<User>(USER_KEY);
 
-      if (token && userStr) {
-        try {
-          const user = JSON.parse(userStr) as User;
-          this._state.set({
-            user,
-            token,
-            isAuthenticated: true,
-            isLoading: false,
-            error: null
-          });
-        } catch {
-          this.clearStorage();
-        }
-      }
+    if (token && user) {
+      this.logger.debug('Restoring auth state from storage', { userId: user.id }, 'AuthService');
+      this._state.set({
+        user,
+        token,
+        isAuthenticated: true,
+        isLoading: false,
+        error: null
+      });
     }
   }
 
@@ -81,6 +77,7 @@ export class AuthService {
   }
 
   logout(): void {
+    this.logger.info('User logged out', undefined, 'AuthService');
     this.clearStorage();
     this._state.set({
       user: null,
@@ -93,10 +90,9 @@ export class AuthService {
   }
 
   private setAuthData(response: LoginResponse): void {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem(TOKEN_KEY, response.token);
-      localStorage.setItem(USER_KEY, JSON.stringify(response.user));
-    }
+    this.storage.setString(TOKEN_KEY, response.token);
+    this.storage.set(USER_KEY, response.user);
+    this.logger.info('User logged in', { userId: response.user.id }, 'AuthService');
 
     this._state.set({
       user: response.user,
@@ -108,10 +104,8 @@ export class AuthService {
   }
 
   private clearStorage(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.removeItem(TOKEN_KEY);
-      localStorage.removeItem(USER_KEY);
-    }
+    this.storage.remove(TOKEN_KEY);
+    this.storage.remove(USER_KEY);
   }
 
   getToken(): string | null {

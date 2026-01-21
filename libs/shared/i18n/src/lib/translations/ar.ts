@@ -26,7 +26,9 @@ export const AR_TRANSLATIONS = {
     details: 'التفاصيل',
     name: 'الاسم',
     type: 'النوع',
-    welcome: 'مرحباً'
+    welcome: 'مرحباً',
+    clearSearch: 'مسح البحث',
+    retry: 'حاول مرة أخرى'
   },
   auth: {
     signIn: 'تسجيل الدخول',
@@ -54,6 +56,7 @@ export const AR_TRANSLATIONS = {
     title: 'التفتيشات',
     subtitle: 'إدارة وتتبع جميع التفتيشات',
     newInspection: 'تفتيش جديد',
+    newInspectionInfo: 'نموذج التفتيش الجديد سيكون متاحاً قريباً',
     inspectionDetails: 'تفاصيل التفتيش',
     inspector: 'المفتش',
     location: 'الموقع',
@@ -70,7 +73,38 @@ export const AR_TRANSLATIONS = {
     priorityLow: 'منخفضة',
     priorityMedium: 'متوسطة',
     priorityHigh: 'عالية',
-    priorityCritical: 'حرجة'
+    priorityCritical: 'حرجة',
+    loading: 'جاري تحميل التفتيشات...',
+    viewAll: 'عرض جميع التفتيشات',
+    filters: {
+      all: 'الكل',
+      pending: 'قيد الانتظار',
+      inProgress: 'قيد التنفيذ',
+      completed: 'مكتمل'
+    },
+    titles: {
+      pending: 'التفتيشات قيد الانتظار',
+      inProgress: 'التفتيشات قيد التنفيذ',
+      completed: 'التفتيشات المكتملة'
+    },
+    subtitles: {
+      pending: 'التفتيشات التي تنتظر البدء',
+      inProgress: 'التفتيشات الجاري العمل عليها',
+      completed: 'التفتيشات المنتهية'
+    },
+    empty: {
+      allTitle: 'لا توجد تفتيشات',
+      allMessage: 'حاول تعديل البحث',
+      pendingTitle: 'لا توجد تفتيشات قيد الانتظار',
+      pendingMessage: 'جميع التفتيشات قد بدأت أو اكتملت',
+      inProgressTitle: 'لا توجد تفتيشات قيد التنفيذ',
+      inProgressMessage: 'لا توجد تفتيشات يتم العمل عليها حالياً',
+      completedTitle: 'لا توجد تفتيشات مكتملة',
+      completedMessage: 'لم يتم إكمال أي تفتيش بعد'
+    },
+    errors: {
+      loadFailed: 'فشل تحميل التفتيشات. يرجى المحاولة مرة أخرى.'
+    }
   },
   errors: {
     required: 'هذا الحقل مطلوب',
@@ -80,7 +114,11 @@ export const AR_TRANSLATIONS = {
     generic: 'حدث خطأ. يرجى المحاولة مرة أخرى.',
     notFound: 'المورد غير موجود',
     unauthorized: 'غير مصرح لك بتنفيذ هذا الإجراء',
-    networkError: 'خطأ في الشبكة. يرجى التحقق من الاتصال.'
+    networkError: 'خطأ في الشبكة. يرجى التحقق من الاتصال.',
+    sessionExpired: 'انتهت صلاحية جلستك. يرجى تسجيل الدخول مرة أخرى.',
+    forbidden: 'ليس لديك صلاحية لتنفيذ هذا الإجراء.',
+    serverError: 'حدث خطأ في الخادم. يرجى المحاولة لاحقاً.',
+    moduleLoadFailed: 'فشل تحميل جزء من التطبيق. يرجى تحديث الصفحة.'
   },
   navigation: {
     dashboard: 'لوحة التحكم',
@@ -89,5 +127,11 @@ export const AR_TRANSLATIONS = {
     settings: 'الإعدادات',
     profile: 'الملف الشخصي',
     help: 'المساعدة'
+  },
+  notifications: {
+    success: 'نجاح',
+    error: 'خطأ',
+    warning: 'تحذير',
+    info: 'معلومات'
   }
 };

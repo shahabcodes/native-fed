@@ -2,14 +2,16 @@ import { Component, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { I18nService } from '@mfe-workspace/shared-i18n';
+import { NotificationContainerComponent } from '@mfe-workspace/shared-ui';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, NotificationContainerComponent],
   selector: 'app-root',
   template: `
     <div class="app-container" [attr.dir]="direction()">
       <router-outlet></router-outlet>
+      <lib-notification-container />
     </div>
   `,
   styles: [`

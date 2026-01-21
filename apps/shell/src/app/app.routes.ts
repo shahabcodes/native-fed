@@ -1,6 +1,5 @@
 import { Route } from '@angular/router';
-import { loadRemoteModule } from '@angular-architects/native-federation';
-import { authGuard, publicGuard } from '@mfe-workspace/shared-services';
+import { authGuard, publicGuard, safeLoadRemoteModule } from '@mfe-workspace/shared-services';
 import { LayoutComponent } from './layout/layout.component';
 
 export const appRoutes: Route[] = [
@@ -8,8 +7,7 @@ export const appRoutes: Route[] = [
   {
     path: 'login',
     canActivate: [publicGuard],
-    loadChildren: () =>
-      loadRemoteModule('login', './routes').then((m) => m.LOGIN_ROUTES)
+    loadChildren: safeLoadRemoteModule('login', './routes')
   },
 
   // Protected routes with layout
@@ -20,13 +18,11 @@ export const appRoutes: Route[] = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: () =>
-          loadRemoteModule('dashboard', './routes').then((m) => m.DASHBOARD_ROUTES)
+        loadChildren: safeLoadRemoteModule('dashboard', './routes')
       },
       {
         path: 'inspection',
-        loadChildren: () =>
-          loadRemoteModule('inspection', './routes').then((m) => m.INSPECTION_ROUTES)
+        loadChildren: safeLoadRemoteModule('inspection', './routes')
       },
       {
         path: '',

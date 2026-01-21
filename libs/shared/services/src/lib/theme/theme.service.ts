@@ -1,5 +1,6 @@
 import { Injectable, signal, computed, effect, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { StorageService } from '../storage/storage.service';
 
 export type Theme = 'light' | 'dark';
 
@@ -10,6 +11,7 @@ const STORAGE_KEY = 'mfe_theme';
 })
 export class ThemeService {
   private platformId = inject(PLATFORM_ID);
+  private storage = inject(StorageService);
 
   private _currentTheme = signal<Theme>(this.getInitialTheme());
 
@@ -22,14 +24,14 @@ export class ThemeService {
 
       if (isPlatformBrowser(this.platformId)) {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem(STORAGE_KEY, theme);
+        this.storage.setString(STORAGE_KEY, theme);
       }
     });
   }
 
   private getInitialTheme(): Theme {
     if (isPlatformBrowser(this.platformId)) {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = this.storage.getString(STORAGE_KEY);
       if (stored && this.isValidTheme(stored)) {
         return stored as Theme;
       }
