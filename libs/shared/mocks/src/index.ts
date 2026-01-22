@@ -5,3 +5,4 @@ export * from './lib/utils/mock-delay';
 export * from './lib/data/dashboard.mock';
 export * from './lib/data/inspection.mock';
 export * from './lib/data/auth.mock';
+export * from './lib/data/menu.mock';

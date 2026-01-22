@@ -27,12 +27,24 @@ body {
   line-height: $line-height-base;
   color: var(--text-primary, $gray-900);
   background-color: var(--bg-primary, $gray-100);
+  background-image:
+    radial-gradient(1200px 600px at 0% -10%, var(--bg-gradient-start, #fff3e0), transparent 60%),
+    radial-gradient(900px 480px at 100% 0%, var(--bg-gradient-end, #e0f2f1), transparent 55%);
   transition: background-color 200ms ease-in-out, color 200ms ease-in-out;
   min-height: 100vh;
+  text-rendering: optimizeLegibility;
 
   [dir='rtl'] & {
     font-family: $font-family-arabic;
   }
+}
+
+:root {
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
 }
 
 // Typography
@@ -56,6 +68,7 @@ p {
 a {
   color: var(--link-color, $primary-color);
   text-decoration: none;
+  text-underline-offset: 0.18em;
   transition: color $transition-fast;
 
   &:hover {
@@ -75,9 +88,17 @@ img {
   height: auto;
 }
 
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
 // Focus Styles
 :focus-visible {
-  outline: 2px solid var(--link-color, $primary-color);
+  outline: 2px solid var(--focus-outline, $primary-color);
   outline-offset: 2px;
 }
 
@@ -103,5 +124,20 @@ img {
 
   &:hover {
     background: var(--scrollbar-thumb-hover, $gray-500);
+  }
+}
+
+* {
+  scrollbar-color: var(--scrollbar-thumb, $gray-400) var(--scrollbar-track, $gray-100);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -6,6 +6,7 @@
 .btn {
   @include button-base;
   min-width: 100px;
+  letter-spacing: 0.01em;
 }
 
 .btn-primary {
@@ -66,12 +67,18 @@
 // Card Components
 .card {
   @include card;
+  transition: transform $transition-fast, box-shadow $transition-fast;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover, $shadow-lg);
+  }
 }
 
 .card-header {
   padding-bottom: $spacer-md;
   margin-bottom: $spacer-md;
-  border-bottom: 1px solid $gray-200;
+  border-bottom: 1px solid var(--card-border, $gray-200);
   @include flex-between;
 }
 
@@ -87,7 +94,7 @@
 .card-footer {
   padding-top: $spacer-md;
   margin-top: $spacer-md;
-  border-top: 1px solid $gray-200;
+  border-top: 1px solid var(--card-border, $gray-200);
   @include flex-end;
   gap: $spacer-sm;
 }
@@ -101,7 +108,7 @@
   display: block;
   margin-bottom: $spacer-xs;
   font-weight: $font-weight-medium;
-  color: $gray-700;
+  color: var(--text-secondary, $gray-700);
 }
 
 .form-control {
@@ -114,7 +121,7 @@
 
   &:focus {
     border-color: $error-color;
-    box-shadow: 0 0 0 3px rgba($error-color, 0.1);
+    box-shadow: 0 0 0 3px rgba($error-color, 0.2);
   }
 }
 
@@ -135,7 +142,7 @@
 .form-check-input {
   width: 18px;
   height: 18px;
-  accent-color: $primary-color;
+  accent-color: var(--checkbox-accent, $primary-color);
   cursor: pointer;
 }
 
@@ -151,6 +158,7 @@
   margin-bottom: $spacer-md;
   @include flex-start;
   gap: $spacer-sm;
+  backdrop-filter: blur(6px);
 }
 
 .alert-success {
@@ -166,9 +174,9 @@
 }
 
 .alert-error {
-  background-color: rgba($error-color, 0.1);
-  border: 1px solid $error-color;
-  color: color.adjust($error-color, $lightness: -10%);
+  background-color: var(--alert-error-bg, rgba($error-color, 0.1));
+  border: 1px solid var(--alert-error-border, $error-color);
+  color: var(--alert-error-text, color.adjust($error-color, $lightness: -10%));
 }
 
 .alert-info {
@@ -186,6 +194,7 @@
   font-weight: $font-weight-medium;
   border-radius: $border-radius-full;
   white-space: nowrap;
+  letter-spacing: 0.02em;
 }
 
 .badge-primary {
@@ -213,8 +222,8 @@
   display: inline-block;
   width: 24px;
   height: 24px;
-  border: 3px solid $gray-200;
-  border-top-color: $primary-color;
+  border: 3px solid var(--card-border, $gray-200);
+  border-top-color: var(--btn-primary-bg, $primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }

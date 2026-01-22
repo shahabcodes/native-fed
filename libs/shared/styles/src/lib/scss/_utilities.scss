@@ -5,12 +5,12 @@
 .text-start { text-align: start; }
 .text-end { text-align: end; }
 
-.text-primary { color: $primary-color; }
-.text-secondary { color: $gray-600; }
+.text-primary { color: var(--link-color, $primary-color); }
+.text-secondary { color: var(--text-secondary, $gray-600); }
 .text-success { color: $success-color; }
 .text-warning { color: $warning-color; }
 .text-error { color: $error-color; }
-.text-muted { color: $gray-500; }
+.text-muted { color: var(--text-tertiary, $gray-500); }
 
 .font-bold { font-weight: $font-weight-bold; }
 .font-medium { font-weight: $font-weight-medium; }

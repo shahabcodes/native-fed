@@ -73,10 +73,12 @@
   font-weight: $font-weight-medium;
   line-height: 1.5;
   text-decoration: none;
-  border: none;
+  border: 1px solid transparent;
   border-radius: $border-radius-md;
   cursor: pointer;
-  transition: all $transition-fast;
+  transition: transform $transition-fast, background-color $transition-fast,
+    box-shadow $transition-fast, border-color $transition-fast, color $transition-fast;
+  box-shadow: var(--btn-shadow, none);
 
   &:disabled {
     opacity: 0.6;
@@ -86,32 +88,35 @@
 
 @mixin button-primary {
   @include button-base;
-  background-color: $primary-color;
-  color: $white;
+  background-color: var(--btn-primary-bg, $primary-color);
+  color: var(--btn-primary-text, $white);
 
   &:hover:not(:disabled) {
-    background-color: $primary-dark;
+    background-color: var(--btn-primary-bg-hover, $primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--btn-shadow-hover, $shadow-md);
   }
 
-  &:focus {
+  &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.3);
+    box-shadow: 0 0 0 3px var(--focus-ring, rgba($primary-color, 0.3));
   }
 }
 
 @mixin button-secondary {
   @include button-base;
-  background-color: transparent;
-  color: $primary-color;
-  border: 1px solid $primary-color;
+  background-color: var(--btn-secondary-bg, transparent);
+  color: var(--btn-secondary-text, $primary-color);
+  border-color: var(--btn-secondary-border, $primary-color);
 
   &:hover:not(:disabled) {
-    background-color: rgba($primary-color, 0.1);
+    background-color: var(--btn-secondary-bg-hover, rgba($primary-color, 0.1));
+    transform: translateY(-1px);
   }
 
-  &:focus {
+  &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.3);
+    box-shadow: 0 0 0 3px var(--focus-ring, rgba($primary-color, 0.3));
   }
 }
 
@@ -121,19 +126,20 @@
   padding: $spacer-sm $spacer-md;
   font-size: $font-size-base;
   line-height: 1.5;
-  border: 1px solid $gray-300;
+  border: 1px solid var(--input-border, $gray-300);
   border-radius: $border-radius-md;
-  background-color: $white;
-  transition: border-color $transition-fast, box-shadow $transition-fast;
+  background-color: var(--input-bg, $white);
+  color: var(--input-text, $gray-900);
+  transition: border-color $transition-fast, box-shadow $transition-fast, background-color $transition-fast;
 
   &:focus {
     outline: none;
-    border-color: $primary-color;
-    box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+    border-color: var(--input-focus-border, $primary-color);
+    box-shadow: 0 0 0 3px var(--input-focus-shadow, rgba($primary-color, 0.1));
   }
 
   &::placeholder {
-    color: $gray-500;
+    color: var(--input-placeholder, $gray-500);
   }
 
   &:disabled {
@@ -144,9 +150,10 @@
 
 // Card Mixin
 @mixin card {
-  background-color: $white;
+  background-color: var(--card-bg, $white);
+  border: 1px solid var(--card-border, $gray-200);
   border-radius: $border-radius-lg;
-  box-shadow: $shadow-md;
+  box-shadow: var(--card-shadow, $shadow-md);
   padding: $spacer-lg;
 }
 
