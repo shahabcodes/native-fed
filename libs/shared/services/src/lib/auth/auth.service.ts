@@ -3,11 +3,9 @@ import { Router } from '@angular/router';
 import { User, LoginCredentials, LoginResponse, AuthState } from '../models/user.model';
 import { StorageService } from '../storage/storage.service';
 import { LoggerService } from '../logger/logger.service';
-import {
-  findMockUser,
-  createMockLoginResponse,
-  MOCK_DELAYS,
-} from '@mfe-workspace/shared-mocks';
+import { createMockLoginResponse, findMockUser } from '../../../../mocks/src/lib/data/auth.mock';
+import { MOCK_DELAYS } from '../../../../mocks/src';
+
 
 const TOKEN_KEY = 'mfe_auth_token';
 const USER_KEY = 'mfe_auth_user';

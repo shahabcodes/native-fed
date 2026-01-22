@@ -1,6 +1,16 @@
-import { MenuItem } from '@mfe-workspace/shared-ui';
+export interface MenuItemMock {
+  id?: string;
+  label: string;
+  labelAr?: string;
+  icon: string;
+  route?: string;
+  queryParams?: Record<string, string>;
+  badge?: number;
+  children?: MenuItemMock[];
+  exactMatch?: boolean;
+}
 
-export const MOCK_MENU_ITEMS: MenuItem[] = [
+export const MOCK_MENU_ITEMS: MenuItemMock[] = [
   {
     id: 'dashboard',
     label: 'Dashboard',

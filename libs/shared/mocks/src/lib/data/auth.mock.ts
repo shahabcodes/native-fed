@@ -1,4 +1,4 @@
-import { User, LoginCredentials, LoginResponse } from '@mfe-workspace/shared-services';
+import { LoginCredentials, LoginResponse, User } from "../../../../services/src/lib/models/user.model";
 
 export interface MockUser {
   email: string;

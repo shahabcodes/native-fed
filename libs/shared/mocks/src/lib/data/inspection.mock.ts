@@ -1,4 +1,4 @@
-import { Inspection } from '@mfe-workspace/shared-services';
+import { Inspection } from "../../../../services/src/lib/models/inspection.model";
 
 export const MOCK_INSPECTIONS: Inspection[] = [
   {

@@ -1,4 +1,4 @@
-import { DashboardStats, RecentActivity } from '@mfe-workspace/shared-services';
+import { DashboardStats, RecentActivity } from "../../../../services/src/lib/models/dashboard.model";
 
 export const MOCK_DASHBOARD_STATS: DashboardStats = {
   totalInspections: 156,
